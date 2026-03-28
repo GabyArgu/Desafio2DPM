@@ -8,4 +8,16 @@
     <string name="hint_nombre">Nombre del destino</string>
     <string name="hint_precio">Precio (USD)</string>
     <string name="hint_descripcion">Descripción del viaje</string>
+    <string name="formato_precio">$%1$.2f</string>
+
+    <string-array name="paises_array">
+        <option>Seleccione un país</option>
+        <option>El Salvador</option>
+        <option>Guatemala</option>
+        <option>Honduras</option>
+        <option>Costa Rica</option>
+        <option>Panamá</option>
+        <option>México</option>
+        <option>España</option>
+    </string-array>
 </resources>
