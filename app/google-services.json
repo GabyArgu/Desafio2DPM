@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "290430307648",
+    "project_id": "gobosco-f2deb",
+    "storage_bucket": "gobosco-f2deb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290430307648:android:fb1c3aa92d891e18e7bea5",
+        "android_client_info": {
+          "package_name": "com.example.GoBosco"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsDkUJ4axeaLL54Py_T03ikcc2o1bs3Yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
