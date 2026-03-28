@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">GoBosco</string>
+    <string name="app_name">Agencia GoBosco</string>
+    <string name="error_campos_vacios">Todos los campos son obligatorios</string>
+    <string name="error_precio">El precio debe ser mayor a 0</string>
+    <string name="error_descripcion">Mínimo 20 caracteres en descripción</string>
+    <string name="confirmar_eliminacion">¿Estás seguro de eliminar este destino?</string>
+    <string name="btn_guardar">Guardar Destino</string>
+    <string name="hint_nombre">Nombre del destino</string>
+    <string name="hint_precio">Precio (USD)</string>
+    <string name="hint_descripcion">Descripción del viaje</string>
 </resources>
