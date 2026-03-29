@@ -1,67 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/primary"> <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="0dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#423466">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivPreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_gallery"
+                app:tint="#66FFFFFF" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSeleccionarImg"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cambiar Foto"
+                android:textColor="@color/white"
+                app:icon="@android:drawable/ic_menu_camera"
+                app:iconTint="@color/white" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_marginBottom="16dp"
+        android:hint="Nombre del Destino"
+        app:boxBackgroundColor="#423466"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:hintTextColor="@color/teal_custom"
+        android:textColorHint="@color/whiteX">
 
-        <ImageView
-            android:id="@+id/ivPreview"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/teal_custom"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="10dp"/>
-
-        <Button
-            android:id="@+id/btnSeleccionarImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Seleccionar Imagen"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"/>
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNombreDestino"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_nombre"
-            android:layout_marginBottom="15dp"/>
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ubicación"
+        android:textColor="@color/accent"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_input_picky"
+        android:paddingHorizontal="12dp">
 
         <Spinner
             android:id="@+id/spnPais"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="15dp"/>
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white" />
+    </FrameLayout>
 
-        <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Precio (USD)"
+        app:boxBackgroundColor="#423466"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:hintTextColor="@color/teal_custom"
+        android:textColorHint="@color/whiteX"
+        app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+        app:startIconTint="@color/teal_custom">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPrecio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_precio"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="15dp"/>
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:hint="Descripción del viaje"
+        app:boxBackgroundColor="#423466"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:hintTextColor="@color/teal_custom"
+        android:textColorHint="@color/whiteX">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDescripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_descripcion"
-            android:lines="4"
             android:gravity="top"
-            android:layout_marginBottom="25dp"/>
+            android:lines="4"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnGuardar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_guardar"
-            android:backgroundTint="@color/primary"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Guardar Destino"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        app:backgroundTint="@color/teal_custom"
+        app:cornerRadius="20dp"
+        android:elevation="4dp" />
 
-    </LinearLayout>
+</LinearLayout>
 </ScrollView>
