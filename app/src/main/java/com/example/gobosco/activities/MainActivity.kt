@@ -2,6 +2,8 @@ package com.example.gobosco.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -61,22 +63,44 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun mostrarDialogoEliminar(destino: Destino) {
-        AlertDialog.Builder(this)
-            .setTitle("Eliminar Destino")
-            .setMessage("¿Estás seguro de que deseas eliminar ${destino.nombre}?")
-            .setPositiveButton("Eliminar") { _, _ ->
-                destino.id?.let { id ->
-                    db.collection("destinos").document(id)
-                        .delete()
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Eliminado correctamente", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Error al eliminar", Toast.LENGTH_SHORT).show()
-                        }
-                }
+        // 1. Inflamos el diseño especializado que creamos
+        val view = layoutInflater.inflate(R.layout.dialog_confirm_delete, null)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(view)
+        val dialog = builder.create()
+
+        // TRUCO DE ESPECIALISTA: Fondo transparente para que se vean los bordes redondeados del XML
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // 2. Referenciamos los textos y botones del layout personalizado
+        val tvMensaje = view.findViewById<TextView>(R.id.tvMensajeDialogo)
+        val btnCancelar = view.findViewById<Button>(R.id.btnCancelar)
+        val btnEliminar = view.findViewById<Button>(R.id.btnEliminarConfirmar)
+
+        // Personalizamos el mensaje con el nombre del destino
+        tvMensaje.text = "¿Estás seguro de que deseas eliminar ${destino.nombre} de tus destinos?"
+
+        // 3. Lógica de los botones
+        btnCancelar.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnEliminar.setOnClickListener {
+            destino.id?.let { id ->
+                db.collection("destinos").document(id)
+                    .delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Destino eliminado con éxito", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error al eliminar", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+        }
+
+        dialog.show()
     }
 }

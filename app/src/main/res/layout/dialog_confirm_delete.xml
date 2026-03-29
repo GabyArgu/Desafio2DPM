@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@drawable/bg_dialog_picky">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@android:drawable/ic_delete"
+        android:contentDescription="Eliminar"
+        android:layout_marginBottom="16dp"
+        app:tint="@color/primary" />
+
+    <TextView
+        android:id="@+id/tvTituloDialogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Eliminar Destino?"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvMensajeDialogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esta acción no se puede deshacer."
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/primary"
+        android:alpha="0.7"
+        android:layout_marginBottom="24dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gap="12dp">
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="@color/primary"
+            android:textAllCaps="false"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btnEliminarConfirmar"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1.2"
+            android:text="Sí, eliminar"
+            android:backgroundTint="@color/teal_custom"
+            android:textColor="@color/primary"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+    </LinearLayout>
+</LinearLayout>
