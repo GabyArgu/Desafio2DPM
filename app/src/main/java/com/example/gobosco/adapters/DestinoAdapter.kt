@@ -12,7 +12,8 @@ import com.example.gobosco.models.Destino
 
 class DestinoAdapter(
     private var lista: List<Destino>,
-    private val onLongClick: (Destino) -> Unit // Esto es lo que permite borrar
+    private val onClick: (Destino) -> Unit,      // Click normal -> Editar
+    private val onLongClick: (Destino) -> Unit   // Click largo -> Eliminar
 ) : RecyclerView.Adapter<DestinoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,7 +32,6 @@ class DestinoAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val destino = lista[position]
         holder.nombre.text = destino.nombre
-        // Usamos el string format para el precio
         holder.precio.text = holder.itemView.context.getString(R.string.formato_precio, destino.precio)
         holder.descripcion.text = destino.descripcion
 
@@ -40,7 +40,10 @@ class DestinoAdapter(
             .placeholder(android.R.drawable.ic_menu_gallery)
             .into(holder.imagen)
 
-        // Detectar cuando el usuario deja presionado el ítem
+        // Un toque abre la edición
+        holder.itemView.setOnClickListener { onClick(destino) }
+
+        // Dejar presionado abre el borrado
         holder.itemView.setOnLongClickListener {
             onLongClick(destino)
             true

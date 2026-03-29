@@ -40,8 +40,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gap="12dp">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCancelar"
@@ -52,19 +51,17 @@
             android:backgroundTint="@android:color/transparent"
             android:textColor="@color/primary"
             android:textAllCaps="false"
-            android:textStyle="bold"/>
-
-        <Button
-            android:id="@+id/btnEliminarConfirmar"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1.2"
-            android:text="Sí, eliminar"
-            android:backgroundTint="@color/teal_custom"
-            android:textColor="@color/primary"
-            android:textAllCaps="false"
             android:textStyle="bold"
-            app:cornerRadius="16dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto"/>
-    </LinearLayout>
+            android:layout_marginEnd="8dp"/> <Button
+        android:id="@+id/btnEliminarConfirmar"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_weight="1.2"
+        android:text="Sí, eliminar"
+        android:backgroundTint="@color/teal_custom"
+        android:textColor="@color/primary"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:cornerRadius="16dp"
+        android:layout_marginStart="8dp"/> </LinearLayout>
 </LinearLayout>
