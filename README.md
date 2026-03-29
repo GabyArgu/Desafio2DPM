@@ -38,16 +38,6 @@ Aplicación móvil diseñada para una Agencia de Viajes que permite gestionar un
 ---
 
 ## 📥 Enlaces de Entrega
-* **Repositorio GitHub:** [Pega aquí el enlace de tu repo]
-* **APK Functional:** [Pega aquí el enlace a tu archivo APK]
-* **Video de Defensa:** [Pega aquí el enlace de tu video]
+* **Repositorio GitHub:** https://github.com/GabyArgu/Desafio2DPM.git
+* **Video de Defensa:** https://drive.google.com/file/d/1aGbi0daoa3Xnn_cKlnQwoXhvbNCdnVJ_/view?usp=sharing
 
----
-
-## 📜 Estándar de Commits
-Se aplicó una convención de verbos en español para el historial de versiones (mínimo 10 commits):
-* `add`: agregar
-* `fix`: corregir
-* `update`: actualizar
-* `remove`: eliminar
-* `implement`: implementar
