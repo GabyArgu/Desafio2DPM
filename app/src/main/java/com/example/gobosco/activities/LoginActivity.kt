@@ -39,10 +39,10 @@ class LoginActivity : AppCompatActivity() {
         btnVerPassword.setOnClickListener {
             if (isPasswordVisible) {
                 etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-                btnVerPassword.setImageResource(android.R.drawable.ic_menu_view)
+                btnVerPassword.setImageResource(R.drawable.ic_eye_open)
             } else {
                 etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                btnVerPassword.setImageResource(android.R.drawable.ic_partial_secure)
+                btnVerPassword.setImageResource(R.drawable.ic_eye_closed)
             }
             isPasswordVisible = !isPasswordVisible
             etPassword.setSelection(etPassword.text.length)
