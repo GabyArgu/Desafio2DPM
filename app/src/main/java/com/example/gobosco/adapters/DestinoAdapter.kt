@@ -10,8 +10,10 @@ import com.bumptech.glide.Glide
 import com.example.gobosco.R
 import com.example.gobosco.models.Destino
 
-class DestinoAdapter(private var lista: List<Destino>) :
-    RecyclerView.Adapter<DestinoAdapter.ViewHolder>() {
+class DestinoAdapter(
+    private var lista: List<Destino>,
+    private val onLongClick: (Destino) -> Unit // Esto es lo que permite borrar
+) : RecyclerView.Adapter<DestinoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nombre: TextView = view.findViewById(R.id.tvNombre)
@@ -29,6 +31,7 @@ class DestinoAdapter(private var lista: List<Destino>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val destino = lista[position]
         holder.nombre.text = destino.nombre
+        // Usamos el string format para el precio
         holder.precio.text = holder.itemView.context.getString(R.string.formato_precio, destino.precio)
         holder.descripcion.text = destino.descripcion
 
@@ -36,6 +39,12 @@ class DestinoAdapter(private var lista: List<Destino>) :
             .load(destino.imageUrl)
             .placeholder(android.R.drawable.ic_menu_gallery)
             .into(holder.imagen)
+
+        // Detectar cuando el usuario deja presionado el ítem
+        holder.itemView.setOnLongClickListener {
+            onLongClick(destino)
+            true
+        }
     }
 
     override fun getItemCount() = lista.size
