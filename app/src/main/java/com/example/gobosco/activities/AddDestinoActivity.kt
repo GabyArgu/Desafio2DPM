@@ -3,6 +3,7 @@ package com.example.gobosco.activities
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -83,13 +84,29 @@ class AddDestinoActivity : AppCompatActivity() {
     }
 
     private fun validarYGuardar() {
-        val nombre = etNombre.text.toString()
-        val precio = etPrecio.text.toString().toDoubleOrNull() ?: 0.0
-        val desc = etDesc.text.toString()
+        val nombre = etNombre.text.toString().trim()
+        val desc = etDesc.text.toString().trim()
+        val precioStr = etPrecio.text.toString()
+        val precio = precioStr.toDoubleOrNull() ?: 0.0
         val pais = spnPais.selectedItem.toString()
 
-        if (nombre.isEmpty() || desc.isEmpty() || (imageUri == null && urlImagenExistente == null) || pais == "Seleccione un país") {
-            showCustomToast("Por favor rellene todos los campos", true)
+        if (nombre.isEmpty() || desc.isEmpty() || pais == "Seleccione un país") {
+            showCustomToast("Por favor, rellene todos los campos", true)
+            return
+        }
+
+        if (imageUri == null && urlImagenExistente == null) {
+            showCustomToast("Debe seleccionar una imagen para el destino", true)
+            return
+        }
+
+        if (precio <= 0) {
+            showCustomToast("El precio debe ser mayor a 0", true)
+            return
+        }
+
+        if (desc.length < 20) {
+            showCustomToast("La descripción debe tener al menos 20 caracteres", true)
             return
         }
 
@@ -152,7 +169,7 @@ class AddDestinoActivity : AppCompatActivity() {
         }
 
         val toast = Toast(applicationContext)
-        toast.setGravity(android.view.Gravity.TOP, 0, 100)
+        toast.setGravity(Gravity.TOP, 0, 100)
         toast.duration = Toast.LENGTH_SHORT
         toast.view = layout
         toast.show()
