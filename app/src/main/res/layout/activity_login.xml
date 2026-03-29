@@ -45,18 +45,37 @@
             android:background="@drawable/bg_input_login"
             android:paddingHorizontal="20dp"
             android:layout_marginBottom="12dp"
+            android:textColor="@color/primary"
             android:textColorHint="#999999"/>
 
-        <EditText
-            android:id="@+id/etPassword"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:background="@drawable/bg_input_login"
-            android:paddingHorizontal="20dp"
             android:layout_marginBottom="24dp"
-            android:textColorHint="#999999"/>
+            android:background="@drawable/bg_input_login">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:background="@android:color/transparent"
+                android:paddingStart="20dp"
+                android:paddingEnd="50dp"
+                android:textColor="@color/primary"
+                android:textColorHint="#999999"/>
+
+            <ImageView
+                android:id="@+id/btnVerPassword"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:padding="14dp"
+                android:src="@android:drawable/ic_menu_view"
+                app:tint="@color/primary"
+                android:contentDescription="Ver contraseña" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/btnLogin"

@@ -3,6 +3,9 @@ package com.example.gobosco.activities
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -11,11 +14,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.example.gobosco.R
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,23 +34,41 @@ class LoginActivity : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
+        val btnVerPassword = findViewById<ImageView>(R.id.btnVerPassword)
+
+        btnVerPassword.setOnClickListener {
+            if (isPasswordVisible) {
+                etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                btnVerPassword.setImageResource(android.R.drawable.ic_menu_view)
+            } else {
+                etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                btnVerPassword.setImageResource(android.R.drawable.ic_partial_secure)
+            }
+            isPasswordVisible = !isPasswordVisible
+            etPassword.setSelection(etPassword.text.length)
+        }
 
         btnLogin.setOnClickListener {
             val email = etEmail.text.toString()
             val pass = etPassword.text.toString()
 
             if (email.isNotEmpty() && pass.isNotEmpty()) {
-                auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showCustomToast("Bienvenido a GoBosco", false)
+                auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        showCustomToast("¡Bienvenido de nuevo!", false)
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {
-                        showCustomToast("Error: ${it.exception?.message}", true)
+                        val msg = when (task.exception) {
+                            is FirebaseAuthInvalidUserException -> "Esta cuenta no está registrada"
+                            is FirebaseAuthInvalidCredentialsException -> "Correo o contraseña incorrectos"
+                            else -> "Error de conexión. Inténtalo de nuevo"
+                        }
+                        showCustomToast(msg, true)
                     }
                 }
             } else {
-                showCustomToast(getString(R.string.error_campos_vacios), true)
+                showCustomToast("Por favor, completa todos los campos", true)
             }
         }
 
@@ -57,17 +82,22 @@ class LoginActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showCustomToast("Usuario creado con éxito", false)
+                auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        showCustomToast("¡Cuenta creada con éxito!", false)
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {
-                        showCustomToast("Error: ${it.exception?.message}", true)
+                        val msg = when (task.exception) {
+                            is FirebaseAuthUserCollisionException -> "Este correo ya está registrado"
+                            is FirebaseAuthInvalidCredentialsException -> "El formato del correo es inválido"
+                            else -> "No se pudo crear la cuenta"
+                        }
+                        showCustomToast(msg, true)
                     }
                 }
             } else {
-                showCustomToast(getString(R.string.error_campos_vacios), true)
+                showCustomToast("Por favor, completa todos los campos", true)
             }
         }
     }
@@ -93,7 +123,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val toast = Toast(applicationContext)
-        toast.setGravity(android.view.Gravity.TOP, 0, 100)
+        toast.setGravity(Gravity.TOP, 0, 150)
         toast.duration = Toast.LENGTH_SHORT
         toast.view = layout
         toast.show()

@@ -12,8 +12,8 @@ import com.example.gobosco.models.Destino
 
 class DestinoAdapter(
     private var lista: List<Destino>,
-    private val onClick: (Destino) -> Unit,      // Click normal -> Editar
-    private val onLongClick: (Destino) -> Unit   // Click largo -> Eliminar
+    private val onClick: (Destino) -> Unit,
+    private val onLongClick: (Destino) -> Unit
 ) : RecyclerView.Adapter<DestinoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
