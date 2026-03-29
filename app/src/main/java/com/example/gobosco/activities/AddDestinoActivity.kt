@@ -1,7 +1,9 @@
 package com.example.gobosco.activities
 
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -40,12 +42,10 @@ class AddDestinoActivity : AppCompatActivity() {
         btnGuardar = findViewById(R.id.btnGuardar)
         val btnFoto = findViewById<Button>(R.id.btnSeleccionarImg)
 
-        // Configurar Spinner de Países
         val adapter = ArrayAdapter.createFromResource(this, R.array.paises_array, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spnPais.adapter = adapter
 
-        // Verificar si es Edición
         destinoId = intent.getStringExtra("DESTINO_ID")
         if (destinoId != null) {
             btnGuardar.text = "Actualizar Destino"
@@ -74,13 +74,9 @@ class AddDestinoActivity : AppCompatActivity() {
                 etPrecio.setText(destino.precio.toString())
                 etDesc.setText(destino.descripcion)
                 urlImagenExistente = destino.imageUrl
-
-                // Cargar imagen previa
                 Glide.with(this).load(destino.imageUrl).into(ivPreview)
-
-                // Seleccionar país en Spinner
-                val adapter = spnPais.adapter as ArrayAdapter<String>
-                val position = adapter.getPosition(destino.pais)
+                val adapterP = spnPais.adapter as ArrayAdapter<String>
+                val position = adapterP.getPosition(destino.pais)
                 spnPais.setSelection(position)
             }
         }
@@ -93,15 +89,13 @@ class AddDestinoActivity : AppCompatActivity() {
         val pais = spnPais.selectedItem.toString()
 
         if (nombre.isEmpty() || desc.isEmpty() || (imageUri == null && urlImagenExistente == null) || pais == "Seleccione un país") {
-            Toast.makeText(this, "Por favor rellene todos los campos", Toast.LENGTH_SHORT).show()
+            showCustomToast("Por favor rellene todos los campos", true)
             return
         }
 
         if (imageUri != null) {
-            // Si eligió una foto nueva, subirla
             subirImagenYDatos(nombre, pais, precio, desc)
         } else {
-            // Si es edición y no cambió la foto, solo actualizar datos
             guardarEnFirestore(nombre, pais, precio, desc, urlImagenExistente!!)
         }
     }
@@ -114,6 +108,8 @@ class AddDestinoActivity : AppCompatActivity() {
             ref.downloadUrl.addOnSuccessListener { url ->
                 guardarEnFirestore(nombre, pais, precio, desc, url.toString())
             }
+        }.addOnFailureListener {
+            showCustomToast("Error al subir imagen", true)
         }
     }
 
@@ -121,19 +117,44 @@ class AddDestinoActivity : AppCompatActivity() {
         val destino = Destino(destinoId, nombre, pais, precio, desc, url)
 
         if (destinoId != null) {
-            // ACTUALIZAR
             db.collection("destinos").document(destinoId!!).set(destino)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Destino Actualizado", Toast.LENGTH_SHORT).show()
+                    showCustomToast("Destino actualizado con éxito", false)
                     finish()
                 }
         } else {
-            // CREAR NUEVO
             db.collection("destinos").add(destino)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Destino Guardado", Toast.LENGTH_SHORT).show()
+                    showCustomToast("Destino guardado con éxito", false)
                     finish()
                 }
         }
+    }
+
+    private fun showCustomToast(mensaje: String, esError: Boolean) {
+        val layout = layoutInflater.inflate(R.layout.custom_toast, findViewById(R.id.toast_layout_root))
+        val fondo = layout.findViewById<View>(R.id.toast_layout_root)
+        val icono = layout.findViewById<ImageView>(R.id.toast_icon)
+        val texto = layout.findViewById<TextView>(R.id.toast_text)
+
+        texto.text = mensaje
+
+        if (esError) {
+            fondo.backgroundTintList = ColorStateList.valueOf(getColor(R.color.accent))
+            icono.setImageResource(android.R.drawable.ic_dialog_alert)
+            icono.imageTintList = ColorStateList.valueOf(getColor(R.color.white))
+            texto.setTextColor(getColor(R.color.white))
+        } else {
+            fondo.backgroundTintList = ColorStateList.valueOf(getColor(R.color.teal_custom))
+            icono.setImageResource(android.R.drawable.ic_dialog_info)
+            icono.imageTintList = ColorStateList.valueOf(getColor(R.color.primary))
+            texto.setTextColor(getColor(R.color.primary))
+        }
+
+        val toast = Toast(applicationContext)
+        toast.setGravity(android.view.Gravity.TOP, 0, 100)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
     }
 }

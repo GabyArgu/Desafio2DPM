@@ -1,8 +1,11 @@
 package com.example.gobosco.activities
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -31,14 +34,13 @@ class MainActivity : AppCompatActivity() {
 
         rvDestinos.layoutManager = LinearLayoutManager(this)
 
-        // Configuramos el Adapter con las dos funciones: Editar y Eliminar
         adapter = DestinoAdapter(listaDestinos,
-            { destino -> // CLICK NORMAL: Editar
+            { destino ->
                 val intent = Intent(this, AddDestinoActivity::class.java)
                 intent.putExtra("DESTINO_ID", destino.id)
                 startActivity(intent)
             },
-            { destino -> // CLICK LARGO: Eliminar
+            { destino ->
                 mostrarDialogoEliminar(destino)
             }
         )
@@ -86,11 +88,41 @@ class MainActivity : AppCompatActivity() {
             destino.id?.let { id ->
                 db.collection("destinos").document(id).delete()
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Destino eliminado con éxito", Toast.LENGTH_SHORT).show()
+                        showCustomToast("Destino eliminado con éxito", false)
                         dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        showCustomToast("Error al eliminar", true)
                     }
             }
         }
         dialog.show()
+    }
+
+    private fun showCustomToast(mensaje: String, esError: Boolean) {
+        val layout = layoutInflater.inflate(R.layout.custom_toast, findViewById(R.id.toast_layout_root))
+        val fondo = layout.findViewById<View>(R.id.toast_layout_root)
+        val icono = layout.findViewById<ImageView>(R.id.toast_icon)
+        val texto = layout.findViewById<TextView>(R.id.toast_text)
+
+        texto.text = mensaje
+
+        if (esError) {
+            fondo.backgroundTintList = ColorStateList.valueOf(getColor(R.color.accent))
+            icono.setImageResource(android.R.drawable.ic_dialog_alert)
+            icono.imageTintList = ColorStateList.valueOf(getColor(R.color.white))
+            texto.setTextColor(getColor(R.color.white))
+        } else {
+            fondo.backgroundTintList = ColorStateList.valueOf(getColor(R.color.teal_custom))
+            icono.setImageResource(android.R.drawable.ic_dialog_info)
+            icono.imageTintList = ColorStateList.valueOf(getColor(R.color.primary))
+            texto.setTextColor(getColor(R.color.primary))
+        }
+
+        val toast = Toast(applicationContext)
+        toast.setGravity(android.view.Gravity.TOP, 0, 100)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
     }
 }
