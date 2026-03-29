@@ -47,9 +47,17 @@ class LoginActivity : AppCompatActivity() {
             val pass = etPassword.text.toString()
 
             if (email.isNotEmpty() && pass.isNotEmpty()) {
+                if (pass.length < 6) {
+                    Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener // Esto detiene el proceso si es muy corta
+                }
+
                 auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        Toast.makeText(this, "Usuario Creado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Usuario Creado con éxito", Toast.LENGTH_SHORT).show()
+
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
                     } else {
                         Toast.makeText(this, "Error: ${it.exception?.message}", Toast.LENGTH_SHORT).show()
                     }

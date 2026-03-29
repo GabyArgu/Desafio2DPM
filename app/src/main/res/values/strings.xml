@@ -9,15 +9,16 @@
     <string name="hint_precio">Precio (USD)</string>
     <string name="hint_descripcion">Descripción del viaje</string>
     <string name="formato_precio">$%1$.2f</string>
+    <string name="desc_agregar_destino">Botón para agregar nuevo destino</string>
 
     <string-array name="paises_array">
-        <option>Seleccione un país</option>
-        <option>El Salvador</option>
-        <option>Guatemala</option>
-        <option>Honduras</option>
-        <option>Costa Rica</option>
-        <option>Panamá</option>
-        <option>México</option>
-        <option>España</option>
+        <item>Seleccione un país</item>
+        <item>El Salvador</item>
+        <item>Guatemala</item>
+        <item>Honduras</item>
+        <item>Costa Rica</item>
+        <item>Panamá</item>
+        <item>México</item>
+        <item>España</item>
     </string-array>
 </resources>
