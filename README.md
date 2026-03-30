@@ -40,4 +40,5 @@ Aplicación móvil diseñada para una Agencia de Viajes que permite gestionar un
 ## 📥 Enlaces de Entrega
 * **Repositorio GitHub:** https://github.com/GabyArgu/Desafio2DPM.git
 * **Video de Defensa:** https://drive.google.com/file/d/1aGbi0daoa3Xnn_cKlnQwoXhvbNCdnVJ_/view?usp=sharing
+* **APK:** https://drive.google.com/file/d/1Jua6AelcbnD-zRjrGNa4jzXEdKGvxJBL/view?usp=drive_link
 
